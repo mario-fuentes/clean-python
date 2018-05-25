@@ -1,20 +1,21 @@
-import subprocess
 from invoke import task
+
 
 @task
 def test(ctx):
     ctx.run('python -m unittest discover -v -s .')
+
 
 @task
 def coverage(ctx):
     from unittest import TestLoader, TextTestRunner
     from coverage import Coverage
 
-    cov = coverage.Coverage()
+    cov = Coverage()
     cov.start()
 
-    suite = unittest.TestLoader().discover("./")
-    unittest.TextTestRunner().run(suite)
+    suite = TestLoader().discover("./")
+    TextTestRunner().run(suite)
 
     cov.stop()
     cov.save()
@@ -22,8 +23,10 @@ def coverage(ctx):
     covered = cov.report(show_missing=True)
     accepted_coverage = 90
 
-    assert covered > accepted_coverage, "Not enough coverage. Minimum {} percent, current: {:.2f}%".format(
-        accepted_coverage, covered)
+    assert covered > accepted_coverage,\
+        "Not enough coverage. Minimum {} percent, current: {:.2f}%".format(
+            accepted_coverage, covered)
+
 
 @task
 def freeze(ctx):
@@ -32,13 +35,16 @@ def freeze(ctx):
     # https://stackoverflow.com/questions/39577984/what-is-pkg-resources-0-0-0-in-output-of-pip-freeze-command
     ctx.run('pip freeze | grep -v "pkg-resources" > requirements.txt')
 
+
 @task
 def build(ctx, version):
     pass
 
+
 @task
 def deploy(ctx, app_name, env='dev'):
     pass
+
 
 @task
 def run(ctx):
