@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+
+# Virtualenv
+.env
+.venv*
+
+.coverage
+htmlcov/*
+coverage.xml
+
+# PyCharm
+.idea
+
+.vscode
+
+# Development environment variables
+env
+
+venv
+
+env.test
+env.test
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
