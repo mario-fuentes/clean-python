@@ -1,2 +1,16 @@
+aniso8601==3.0.0
+click==6.7
 coverage==4.5.1
+Flask==1.0.2
+Flask-Injector==0.10.1
+Flask-RESTful==0.3.6
+injector==0.13.4
 invoke==1.0.0
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+pytz==2018.4
+six==1.11.0
+SQLAlchemy==1.2.7
+typing==3.6.4
+Werkzeug==0.14.1

@@ -15,7 +15,9 @@ class SQLAlchemyInitializer:
         self.metadata = MetaData(self.engine)
         self.entity_mappers = []
         self.session_maker = None
+        self.clear()
 
+    def clear(self):
         clear_mappers()
 
     def add_mapper(self, entity_mapper: IEntityMapper):

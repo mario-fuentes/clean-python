@@ -5,13 +5,20 @@ from flask import Flask
 from flask_injector import FlaskInjector
 from flask_restful import Api
 
+from app.configuration import configure_app_routes, configure_app_bindings, get_app_mappers
 from orm.sqlalchemy_initializer import SQLAlchemyInitializer
 
-routing_modules = []
+routing_modules = [
+    configure_app_routes
+]
 
-bindings_modules = []
+bindings_modules = [
+    configure_app_bindings
+]
 
-mapping_modules = []
+mapping_modules = [
+    get_app_mappers
+]
 
 
 def configure_database(config):
@@ -24,8 +31,8 @@ def configure_database(config):
 
 def get_version():
     return json.dumps({
-        'version': os.getenv('DEPLOY_VERSION'),
-        'commit': os.getenv('COMMIT_REVISION')
+        'version': os.getenv('DEPLOY_VERSION', 'NOT_DEFINED'),
+        'commit': os.getenv('COMMIT_REVISION', 'NOT_DEFINED')
     })
 
 
@@ -41,6 +48,7 @@ def create_app():
     bindings_modules.append(initializer.get_inject_module())
     FlaskInjector(app=app, modules=bindings_modules)
 
+    # a helper endpoint to identify the current version
     app.add_url_rule('/version', 'version', (lambda: get_version(app.config)))
 
     return app
