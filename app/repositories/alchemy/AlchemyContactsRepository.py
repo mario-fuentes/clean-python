@@ -15,11 +15,11 @@ class AlchemyContactsRepository(ContactsRepository):
     def save(self, contact: Contact):
         self.session.add(contact)
 
-    def get(self, id: int):
-        pass
+    def get(self, id: int) -> Contact:
+        return self.session.query(Contact).get(id)
 
     def get_all(self) -> List[Contact]:
-        pass
+        return self.session.query(Contact).all()
 
     def get_by_name(self, name: str) -> List[Contact]:
         pass

@@ -22,6 +22,12 @@ class ContactsManager:
 
         return contact
 
+    def get_contact_by_id(self, id: int):
+        return self.repo.get(id)
+
+    def get_all(self):
+        return self.repo.get_all()
+
     def __validate_contact(self, contact: Contact):
         if contact.name is None:
             raise ServiceException

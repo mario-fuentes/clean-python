@@ -10,7 +10,9 @@ from orm.i_entity_mapper import IEntityMapper
 
 
 def configure_app_routes(api: Api):
-    api.add_resource(ContactResource, '/contacts')
+    api.add_resource(ContactResource,
+                     '/contacts',
+                     '/contacts/<int:id>')
 
 
 def configure_app_bindings(binder: Binder):

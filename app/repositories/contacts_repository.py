@@ -11,7 +11,7 @@ class ContactsRepository(ABC):
         pass
 
     @abstractmethod
-    def get(self, id: int):
+    def get(self, id: int) -> Contact:
         pass
 
     @abstractmethod
