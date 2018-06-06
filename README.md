@@ -1,4 +1,6 @@
-# Clean Python: an example of SOLID principles applied to Python 3
+# Clean Python: architecture in Python 3
+
+A basic architecture with dependency injection in Python, based on the Clean Architecture and Onion Architecture styles.
 
 ## Build and run
 
