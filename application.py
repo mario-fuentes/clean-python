@@ -29,15 +29,24 @@ def configure_database(config):
     return initializer
 
 
-def get_version():
+def get_version(config):
     return json.dumps({
-        'version': os.getenv('DEPLOY_VERSION', 'NOT_DEFINED'),
-        'commit': os.getenv('COMMIT_REVISION', 'NOT_DEFINED')
+        'version': config['version'],
+        'commit': config['commit']
     })
+
+
+def load_env_config(config):
+    config['db_uri'] = os.getenv('APP_DB_URI', 'sqlite:///:memory:')
+    config['version'] = os.getenv('DEPLOY_VERSION', 'NOT_DEFINED'),
+    config['commit'] = os.getenv('COMMIT_REVISION', 'NOT_DEFINED')
 
 
 def create_app():
     app = Flask(__name__)
+    app.config['DEBUG'] = True
+    app.config['TESTING'] = True
+    load_env_config(app.config)
 
     initializer = configure_database(app.config)
 
@@ -49,7 +58,7 @@ def create_app():
     FlaskInjector(app=app, modules=bindings_modules)
 
     # a helper endpoint to identify the current version
-    app.add_url_rule('/version', 'version', (lambda: get_version(app.config)))
+    app.add_url_rule('/version', 'version', lambda: get_version(app.config))
 
     return app
 

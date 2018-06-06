@@ -40,8 +40,7 @@ class ContactResource(Resource):
             return marshal(contact, __contact_fields__), 201
         except ServiceException as ex:
             self.session.rollback()
-            self.logger.exception(ex)
-            return {'error': ex.strerror}, 500
+            return self._create_exception_response(ex)
 
     def get(self, id: int = None):
 
@@ -55,8 +54,7 @@ class ContactResource(Resource):
             contacts = self.manager.get_all()
             return marshal(contacts, __contact_fields__), 200
         except ServiceException as ex:
-            self.logger.exception(ex)
-            return {'error': ex.strerror}, 500
+            return self._create_exception_response(ex)
 
     def _get_by_id(self, id: int):
         if id <= 0:
@@ -67,5 +65,8 @@ class ContactResource(Resource):
 
             return marshal(contact, __contact_fields__), 200
         except ServiceException as ex:
-            self.logger.exception(ex)
-            return {'error': ex.strerror}, 500
+            return self._create_exception_response(ex)
+
+    def _create_exception_response(self, ex: ServiceException):
+        self.logger.exception(ex)
+        return {'error': str(ex)}, 500
