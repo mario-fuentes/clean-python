@@ -4,6 +4,7 @@ import os
 from flask import Flask
 from flask_injector import FlaskInjector
 from flask_restful import Api
+from sqlalchemy.orm import scoped_session
 
 from app.configuration import configure_app_routes, configure_app_bindings, get_app_mappers
 from orm.sqlalchemy_initializer import SQLAlchemyInitializer
@@ -53,6 +54,11 @@ def create_app():
     api = Api(app)
     for routing in routing_modules:
         routing(api)
+
+    # Injector will inject automatically the Session into the context
+    @app.teardown_request
+    def shutdown_session(sender, exception=None, session_manager: scoped_session = None):
+        session_manager.remove()
 
     bindings_modules.append(initializer.get_inject_module())
     FlaskInjector(app=app, modules=bindings_modules)
