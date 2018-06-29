@@ -55,12 +55,7 @@ def create_app():
     for routing in routing_modules:
         routing(api)
 
-    # Injector will inject automatically the Session into the context
-    @app.teardown_request
-    def shutdown_session(sender, exception=None, session_manager: scoped_session = None):
-        session_manager.remove()
-
-    bindings_modules.append(initializer.get_inject_module())
+    bindings_modules.append(initializer.get_inject_module(app))
     FlaskInjector(app=app, modules=bindings_modules)
 
     # a helper endpoint to identify the current version

@@ -12,7 +12,7 @@ def create_test_app(modules=None):
     initializer.add_mappers(get_app_mappers())
     initializer.configure_database()
     modules = modules or [configure_app_bindings]
-    modules.append(initializer.get_inject_module())
+    modules.append(initializer.get_inject_module(app))
 
     api = Api(app)
     configure_app_routes(api)

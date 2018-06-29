@@ -29,7 +29,7 @@ class TestSQLAlchemyInitializer(TestCase):
 
     def test_create_inject_module_should_return_a_new_instance(self):
         self.initializer.configure_database()
-        module = self.initializer.get_inject_module()
+        module = self.initializer.get_inject_module(MagicMock())
         self.assertIsNotNone(module)
         session = module.provide_session()
         self.assertIsInstance(session, Session)

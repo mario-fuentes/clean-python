@@ -1,10 +1,8 @@
-import json
 from unittest import TestCase
 from unittest.mock import MagicMock
 
 from injector import Binder
 
-from app.infra.orm.contact_mapper import ContactMapper
 from app.services.contacts_manager import ContactsManager
 from app.services.service_exception import ServiceException
 from app.test.test_app import create_test_app

@@ -1,5 +1,6 @@
 from typing import List
 
+from flask import Flask
 from injector import Module
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import clear_mappers, mapper, sessionmaker
@@ -37,5 +38,5 @@ class SQLAlchemyInitializer:
         self.session_maker = sessionmaker(bind=self.engine)
         return self.session_maker
 
-    def get_inject_module(self) -> Module:
-        return SQLAlchemySessionModule(self.session_maker)
+    def get_inject_module(self, app: Flask) -> Module:
+        return SQLAlchemySessionModule(self.session_maker, app)
